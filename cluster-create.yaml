@@ -1,0 +1,13 @@
+
+gcloud container clusters create my-autoscaled-cluster \
+  --zone=europe-west1 \
+  --num-nodes=3 \
+  --enable-autoscaling \
+  --min-nodes=1 \
+  --max-nodes=5 \
+  --enable-vertical-pod-autoscaling \
+  --enable-cost-allocation \
+  --logging=SYSTEM,KCP_HPA \
+  --enable-image-streaming \
+  --enable-managed-prometheus \
+  --enable-fleet

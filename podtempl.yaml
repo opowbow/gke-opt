@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PodTemplate
+metadata:
+  name: buffer-unit-template
+  namespace: buffer # the namespace must be the same namespace as the CapacityBuffer
+template:
+  spec:
+    nodeSelector:
+      cloud.google.com/compute-class: spot-fallback-demo
+    terminationGracePeriodSeconds: 0
+    containers:
+    - name: buffer-container
+      image: registry.k8s.io/pause:3.9
+      resources:
+        requests:
+          cpu: "1"
+          memory: "1Gi"
+        limits:
+          cpu: "1"
+          memory: "1Gi"

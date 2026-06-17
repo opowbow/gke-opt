@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: critical-workload-ref
+  namespace: buffer # the namespace must be the same namespace as the CapacityBuffer
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: critical-workload
+  template:
+    metadata:
+      labels:
+        app: critical-workload
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sleep", "3600"]
+        resources:
+          requests:
+            cpu: 100m

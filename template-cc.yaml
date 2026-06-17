@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PodTemplate
+metadata:
+  name: buffer-template
+  namespace: default
+template:
+  spec:
+    nodeSelector:
+      cloud.google.com/compute-class: spot-fallback-demo
+    tolerations:
+    - key: cloud.google.com/gke-spot
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+    containers:
+    - name: buffer-container
+      image: registry.k8s.io/pause:3.9
+      resources:
+        requests:
+          cpu: "600m"
+          memory: "1900Mi"
+

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workload-1-deployment
+  labels:
+    app: workload-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workload-1
+  template:
+    metadata:
+      labels:
+        app: workload-1
+    spec:
+      containers:
+      - name: workload-1-app
+        # IMPORTANT: Replace this with the path to your own image
+        image: "us-central1-docker.pkg.dev/op-hack-001/cymbal-gke-repo/cpu-intensive-app:v13.0.0"
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: FIB_NUMBER
+          value: "36"
+        # GOMAXPROCS is set to 1 to align with the lab's goal of observing
+        # scaling behavior based on a single, constrained CPU core.
+        - name: GOMAXPROCS
+          value: "1"
+        resources:
+          requests:
+            cpu: "4"
+            memory: "16Gi"
+          limits:
+            cpu: "4"
+            memory: "16Gi"
+

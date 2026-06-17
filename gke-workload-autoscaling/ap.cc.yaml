@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ap-cc-demo
+spec:
+  selector:
+    matchLabels:
+      run: ap-cc-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: ap-cc-demo
+    spec:
+      nodeSelector:
+        cloud.google.com/compute-class: autopilot
+      containers:
+      - name: ap-cc-demo
+        image: k8s.gcr.io/hpa-example
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 100m
+          requests:
+            cpu: 50m

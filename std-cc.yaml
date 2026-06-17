@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: std-cc-demo
+spec:
+  selector:
+    matchLabels:
+      run: std-cc-demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: std-cc-demo
+    spec:
+      containers:
+      - name: std-cc-demo
+        image: k8s.gcr.io/hpa-example
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 100m
+          requests:
+            cpu: 50m

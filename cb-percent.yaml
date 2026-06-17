@@ -1,0 +1,12 @@
+apiVersion: autoscaling.x-k8s.io/v1beta1
+kind: CapacityBuffer
+metadata:
+  name: percentage-buffer
+  namespace: buffer
+spec:
+  scalableRef:
+    apiGroup: apps
+    kind: Deployment
+    name: critical-workload-ref
+  percentage: 20
+  provisioningStrategy: "buffer.x-k8s.io/active-capacity"

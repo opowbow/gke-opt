@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workload-2-loadgen
+  labels:
+    app: workload-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workload-2
+  template:
+    metadata:
+      labels:
+        app: workload-2
+    spec:
+      containers:
+      - name: loadgen
+        # IMPORTANT: Replace this with the path to your own image
+        image: "us-central1-docker.pkg.dev/op-hack-001/cymbal-gke-repo/load-generator:v13.0.0clea"
+        env:
+        - name: TARGET_URL
+          value: "http://workload-1-svc:8080/calculate"
+        - name: DEFAULT_QPS
+          value: "25"
+        - name: DEFAULT_CONCURRENCY
+          value: "10"
+        - name: DEFAULT_CYCLE_LENGTH
+          value: "30s"
+        - name: SCALE_FACTOR
+          value: "2"
+        - name: NUMBER_OF_CYCLES
+          value: "4"
+        - name: WAIT_PERIOD
+          value: "5s"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "256Mi"
+          limits:
+            cpu: "1"
+            memory: "512Mi"

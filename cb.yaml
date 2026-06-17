@@ -1,0 +1,10 @@
+apiVersion: autoscaling.x-k8s.io/v1beta1
+kind: CapacityBuffer
+metadata:
+  name: fixed-replica-buffer
+  namespace: buffer
+spec:
+  podTemplateRef:
+    name: buffer-unit-template
+  replicas: 3
+  provisioningStrategy: "buffer.x-k8s.io/active-capacity"
