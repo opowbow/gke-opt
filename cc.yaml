@@ -7,8 +7,7 @@ spec:
     enabled: true
   # Priorities define the fallback order. Higher score is higher priority.
   priorities:
-  - machineType: e2-standard-2
-    spot: true
+  - nodepools: [spot-nodepool]
 
   - machineType: e2-standard-2
     spot: false
