@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novpa-demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: novpa-demo
+  template:
+    metadata:
+      labels:
+        app: novpa-demo
+    spec:
+      nodeSelector:
+        cloud.google.com/compute-class: spot-fallback-demo
+      tolerations:
+      - key: cloud.google.com/gke-spot
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+      containers:
+      - name: demo-container
+        image: nginx
+        resources:
+          requests:
+            cpu: "600m"
+            memory: "1900Mi"
